@@ -1,0 +1,50 @@
+.hidden {
+  visibility: hidden;
+}
+
+.thread-pool {
+  display: grid;
+  align-content: space-between;
+  margin: 20px 0;
+  height: 357px;
+  background: #fff;
+  border: #000;
+  border-radius: 5px;
+  padding: 16px;
+}
+
+.thread-pool .sleeping {
+  margin: auto;
+}
+
+.thread-pool .running .thread,
+.thread-pool .running .instruction,
+.thread-pool .sleeping .thread,
+.thread-pool .sleeping .instruction {
+  border-radius: 2px;
+  width: 100px;
+  height: 20px;
+  display: grid;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.thread-pool .running .thread {
+  color: #fff;
+  background-color: green;
+}
+
+.thread-pool .running .instruction {
+  color: #000;
+  background-color: #ccc;
+}
+
+.thread-pool .sleeping .thread {
+  color: #fff;
+  background-color: red;
+}
+
+.thread-pool .sleeping .instruction {
+  color: #fff;
+  background-color: red;
+}
