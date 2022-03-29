@@ -16,9 +16,7 @@ template.innerHTML = `
 const $ = (el, selector) => el.shadowRoot.querySelector(selector);
 
 class ThreadPool extends HTMLElement {
-  static get observedAttributes() {
-    return ['next-instruction'];
-  }
+  #instruction;
 
   constructor() {
     super();
@@ -26,17 +24,34 @@ class ThreadPool extends HTMLElement {
     shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
-  attributeChangedCallback(attrName, oldVal, newVal) {
-    if (newVal === 'instruction4()') {
-      // blocking instruction
+  set instruction(newIns) {
+    this.#instruction = newIns;
+    this.#render();
+  }
+
+  #render() {
+    if (this.#instruction.id === 'ins4') {
       $(this, '.running').classList.add('hidden');
       $(this, '.sleeping').classList.remove('hidden');
-      $(this, '.sleeping .instruction').innerHTML = newVal;
+      $(this, '.sleeping .instruction').innerHTML =
+        this.#instruction.instruction;
+      if (this.#instruction.type === 'non-blocking') {
+        $(this, '.sleeping .thread').classList.add('hidden');
+      } else {
+        $(this, '.sleeping .thread').classList.remove('hidden');
+      }
     } else {
       $(this, '.sleeping').classList.add('hidden');
       $(this, '.running').classList.remove('hidden');
-      $(this, '.running .instruction').innerHTML = newVal;
-      this.#moveRunningThread();
+      $(this, '.running .instruction').innerHTML =
+        this.#instruction.instruction;
+      if (this.#instruction.id === 'end') {
+        $(this, '.running').classList.add('hidden');
+        $(this, '.running').style.marginLeft = '0';
+        $(this, '.running .instruction').innerHTML = '';
+      } else {
+        this.#moveRunningThread();
+      }
     }
   }
 

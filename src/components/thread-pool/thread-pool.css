@@ -22,7 +22,7 @@
 .thread-pool .sleeping .thread,
 .thread-pool .sleeping .instruction {
   border-radius: 2px;
-  width: 100px;
+  width: 200px;
   height: 20px;
   display: grid;
   justify-content: space-around;
@@ -41,10 +41,12 @@
 
 .thread-pool .sleeping .thread {
   color: #fff;
+  font-weight: bold;
   background-color: red;
 }
 
 .thread-pool .sleeping .instruction {
   color: #fff;
+  font-weight: bold;
   background-color: red;
 }
