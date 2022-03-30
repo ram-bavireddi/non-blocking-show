@@ -17,6 +17,17 @@
   margin: auto;
 }
 
+.thread-pool .parking .thread {
+  color: #000;
+  background-color: orange;
+  border-radius: 2px;
+  width: 100px;
+  height: 20px;
+  display: grid;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .thread-pool .running .thread,
 .thread-pool .running .instruction,
 .thread-pool .sleeping .thread,

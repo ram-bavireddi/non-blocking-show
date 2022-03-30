@@ -2,6 +2,9 @@ const template = document.createElement('template');
 template.innerHTML = `
     <link rel="stylesheet" href="/components/thread-pool/thread-pool.css">
     <div class="thread-pool">
+        <div class="parking">
+          <div class="thread">thread</div>
+        </div>
         <div class="sleeping hidden">
           <div class="instruction"></div>
           <div class="thread">thread</div>
@@ -30,12 +33,16 @@ class ThreadPool extends HTMLElement {
   }
 
   #render() {
-    if (this.#instruction.id === 'ins4') {
+    const insId = this.#instruction.id;
+    const insType = this.#instruction.type;
+    const ins = this.#instruction.instruction;
+    $(this, '.parking .thread').classList.add('hidden');
+    if (insId === 'ins4') {
       $(this, '.running').classList.add('hidden');
       $(this, '.sleeping').classList.remove('hidden');
-      $(this, '.sleeping .instruction').innerHTML =
-        this.#instruction.instruction;
-      if (this.#instruction.type === 'non-blocking') {
+      $(this, '.sleeping .instruction').innerHTML = ins;
+      if (insType === 'non-blocking') {
+        $(this, '.parking .thread').classList.remove('hidden');
         $(this, '.sleeping .thread').classList.add('hidden');
       } else {
         $(this, '.sleeping .thread').classList.remove('hidden');
@@ -43,9 +50,9 @@ class ThreadPool extends HTMLElement {
     } else {
       $(this, '.sleeping').classList.add('hidden');
       $(this, '.running').classList.remove('hidden');
-      $(this, '.running .instruction').innerHTML =
-        this.#instruction.instruction;
-      if (this.#instruction.id === 'end') {
+      $(this, '.running .instruction').innerHTML = ins;
+      if (insId === 'end') {
+        $(this, '.parking .thread').classList.remove('hidden');
         $(this, '.running').classList.add('hidden');
         $(this, '.running').style.marginLeft = '0';
         $(this, '.running .instruction').innerHTML = '';
